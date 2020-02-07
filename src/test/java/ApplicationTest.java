@@ -23,7 +23,7 @@ public class ApplicationTest {
 
         @Test
         public void addAddressBook() throws Exception {
-            this.mockMvc.perform(post("/addAddressBook"));
+            this.mockMvc.perform(post("/addAddressbook"));
             this.mockMvc.perform(get("/AddressBook?id=-1")).andDo(print()).andExpect(status().isOk())
                     .andExpect(content().string(containsString("Address Book")));
         }

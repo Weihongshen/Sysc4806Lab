@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
-
+import java.util.concurrent.atomic.AtomicLong;
 
 @Entity
 public class AddressBook {
@@ -16,6 +16,7 @@ public class AddressBook {
     @GeneratedValue
     private Integer id;
 
+    private static final AtomicLong counter = new AtomicLong();
 
 //    public static void main(String[] args) {
 //        // TODO Auto-generated method stub
@@ -30,6 +31,7 @@ public class AddressBook {
     @Autowired
     public AddressBook() {
         this.buddyinfo = new ArrayList<BuddyInfo>();
+        this.id = Math.toIntExact(counter.incrementAndGet());
     }
 
     public int getId(){

@@ -15,7 +15,7 @@ public class GUIController {
     @Autowired
     private AddressBookRepository bookRep;
 
-    @GetMapping("/AddressBook")
+    @GetMapping("AddressBook")
     public String viewAddressBook(@RequestParam(value = "id") int bookId,
                                   Model model) {
         if (bookId == -1) {
