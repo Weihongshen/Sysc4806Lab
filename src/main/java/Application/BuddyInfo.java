@@ -18,8 +18,6 @@ public class BuddyInfo {
     private String address;
     private String phoneNum;
 
-    private static final AtomicLong counter = new AtomicLong();
-
 
     @ManyToOne
     private AddressBook book;
@@ -30,7 +28,6 @@ public class BuddyInfo {
 
     public BuddyInfo(){
         this(null,null,null);
-        setId(Math.toIntExact(counter.incrementAndGet()));
     }
 
     public BuddyInfo(String name, String address,String phoneNum) {
@@ -38,7 +35,6 @@ public class BuddyInfo {
         this.name=name;
         this.address=address;
         this.phoneNum = phoneNum;
-        setId(Math.toIntExact(counter.incrementAndGet()));
     }
 
     public Integer getId(){

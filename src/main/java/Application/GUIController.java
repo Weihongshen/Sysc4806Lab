@@ -17,7 +17,7 @@ public class GUIController {
 
     @GetMapping("/addressBook")
     public String getAddressBook(@RequestParam("id") Integer id, Model model) {
-        Optional<AddressBook> addressBook = this.bookRep.findById(id);
+        AddressBook addressBook = this.bookRep.findById(id);
         model.addAttribute("addressBook", addressBook);
         return "addressBook";
     }

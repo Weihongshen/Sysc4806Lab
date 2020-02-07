@@ -5,11 +5,11 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 <body>
-<h1>Address Book</h1>
+<h1>AddressBook</h1>
 <p th:text="'Id: ' + ${book.id}"/>
 
 <p>My Buddies:</p>
-<tr th:each="buddy: ${book.myBuddies}">
+<tr th:each="buddy: ${book.getBuddy}">
     <td th:text="'Id: ' + ${buddy.id}" />
     <td th:text="'Name: ' + ${buddy.name}" />
     <td th:text="'Address: ' + ${buddy.address}" />

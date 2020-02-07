@@ -17,62 +17,37 @@ public class BuddyInfoController {
 
     private final AtomicLong Counter = new AtomicLong();
 
-    @PostMapping("/addBuddy")
-    public BuddyInfo addBuddy(@RequestParam(value = "name") String name,
-                              @RequestParam(value = "address") String phoneNumber,
-                              @RequestParam(value = "phoneNum") String address,
-                              @RequestParam(value = "bookId") int bookId) {
-
-        BuddyInfo newBuddy = null;
-        Optional<AddressBook> checkBook = bookRep.findById(bookId);
-        if (checkBook.isPresent()){
-            AddressBook book = checkBook.get();
-            System.out.println(book.toString());
-
-            newBuddy = new BuddyInfo(name, phoneNumber, address);
-            int newId = Math.toIntExact(Counter.incrementAndGet());
-            System.out.println(newId);
-
-            book.addBuddy(newBuddy);
-
-            bookRep.save(book);
-        } else {
-            System.out.println(String.format("No AddressBook with id: %d", bookId));
-
-            for (AddressBook tempBook : bookRep.findAll()){
-                System.out.println(tempBook.toString());
-            }
-        }
-
-        return newBuddy;
+    public BuddyInfoController(AddressBookRepository bookRep, BuddyInfoRepository repository){
+        this.bookRep = bookRep;
+        this.repository = repository;
     }
 
-    @PostMapping("/removeBuddy")
-    public Boolean removeBuddy(@RequestParam(value = "buddyId") int buddyId,
-                               @RequestParam(value = "bookId") int bookId) {
-        Boolean retVal = false;
+    @PostMapping(value = "/addBuddy", produces = "application/json")
+    public BuddyInfo addBuddy(@RequestParam(value = "name") String name,
+                              @RequestParam(value = "address") String address,
+                              @RequestParam(value = "phoneNum") String phoneNum,
+                              @RequestParam(value = "bookId") Integer bookId) {
 
-        BuddyInfo newBuddy = null;
+        AddressBook addressBook = this.bookRep.findById(bookId);
+        BuddyInfo buddy = new BuddyInfo(name, address,phoneNum);
+        this.repository.save(buddy);
 
-        Optional<AddressBook> checkBook = bookRep.findById(bookId);
-        if (checkBook.isPresent()){
-            AddressBook book = checkBook.get();
+        addressBook.addBuddy(buddy);
+        this.bookRep.save(addressBook);
 
-            book.removeById(buddyId);
 
-            bookRep.save(book);
-            repository.deleteById(buddyId);
+        return buddy;
+    }
 
-            retVal = true;
-        } else {
-            System.out.println(String.format("No AddressBook with id: %d", bookId));
 
-            for (AddressBook tempBook : bookRep.findAll()){
-                System.out.println(tempBook.toString());
-            }
-        }
-
-        return retVal;
+    @ResponseBody
+    @PostMapping(value = "/removeBuddy", produces = "application/json")
+    public void removeBuddy(@RequestParam(value = "buddyId") Integer buddyId) {
+        BuddyInfo buddy = this.repository.findById(buddyId);
+        AddressBook addressBook = buddy.getBook();
+        addressBook.removeBBuddy(buddy);
+        this.repository.deleteById(buddyId);
+        this.bookRep.save(addressBook);
     }
 
 }

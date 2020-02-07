@@ -16,7 +16,6 @@ public class AddressBook {
     @GeneratedValue
     private Integer id;
 
-    private static final AtomicLong counter = new AtomicLong();
 
 //    public static void main(String[] args) {
 //        // TODO Auto-generated method stub
@@ -31,7 +30,6 @@ public class AddressBook {
     @Autowired
     public AddressBook() {
         this.buddyinfo = new ArrayList<BuddyInfo>();
-        this.id = Math.toIntExact(counter.incrementAndGet());
     }
 
     public Integer getId(){
@@ -52,6 +50,16 @@ public class AddressBook {
         }
     }
 
+    public BuddyInfo getBuddy(int i){
+        BuddyInfo toRet = null;
+
+        if (i < buddyinfo.size()) {
+            toRet = buddyinfo.get(i);
+        }
+
+        return(toRet);
+    }
+
     public String toString(){
         String result = "" +'\n';
         for(BuddyInfo buddy : this.buddyinfo){
@@ -65,6 +73,10 @@ public class AddressBook {
             return this.buddyinfo.remove(index);
         }
         return null;
+    }
+
+    public void removeBBuddy(BuddyInfo b) {
+        this.buddyinfo.remove(b.getName());
     }
 
     public void removeById(int id) {
