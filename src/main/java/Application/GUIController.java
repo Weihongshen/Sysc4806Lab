@@ -15,22 +15,10 @@ public class GUIController {
     @Autowired
     private AddressBookRepository bookRep;
 
-    @GetMapping("AddressBook")
-    public String viewAddressBook(@RequestParam(value = "id") int bookId,
-                                  Model model) {
-        if (bookId == -1) {
-            for (AddressBook book : bookRep.findAll()) {
-                bookId = book.getId();
-            }
-        }
-
-        Optional<AddressBook> checkBook = bookRep.findById(bookId);
-        if (checkBook.isPresent()){
-            model.addAttribute("book", checkBook.get());
-        } else {
-            System.out.println(String.format("No AddressBook with id: %d", bookId));
-        }
-
-        return "AddressBook";
+    @GetMapping("/addressBook")
+    public String getAddressBook(@RequestParam("id") Integer id, Model model) {
+        Optional<AddressBook> addressBook = this.bookRep.findById(id);
+        model.addAttribute("addressBook", addressBook);
+        return "addressBook";
     }
 }

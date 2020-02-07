@@ -14,11 +14,11 @@ public class AddressBookController {
     @Autowired
     private AddressBookRepository bookRep;
 
+    @ResponseBody
     @PostMapping("/addAddressbook")
-    public @ResponseBody
-    AddressBook addAddressBook() {
+    public AddressBook addAddressBook() {
         AddressBook newBook = new AddressBook();
-        bookRep.save(newBook);
+        this.bookRep.save(newBook);
 
         return newBook;
     }

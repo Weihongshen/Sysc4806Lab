@@ -13,7 +13,7 @@ public class BuddyInfo {
 
     @Id
     @GeneratedValue
-    private Integer id = null;
+    private Integer id;
     private String name;
     private String address;
     private String phoneNum;

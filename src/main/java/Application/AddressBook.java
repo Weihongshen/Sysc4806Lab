@@ -34,11 +34,11 @@ public class AddressBook {
         this.id = Math.toIntExact(counter.incrementAndGet());
     }
 
-    public int getId(){
+    public Integer getId(){
         return this.id;
     }
 
-    public void setId(int id){
+    public void setId(Integer id){
         this.id = id;
     }
 
