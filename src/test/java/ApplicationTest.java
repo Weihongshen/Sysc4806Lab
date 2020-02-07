@@ -24,44 +24,44 @@ public class ApplicationTest {
         @Test
         public void addAddressBook() throws Exception {
             this.mockMvc.perform(post("/addAddressBook"));
-            this.mockMvc.perform(get("/viewAddressBook?id=-1")).andDo(print()).andExpect(status().isOk())
+            this.mockMvc.perform(get("/AddressBook?id=-1")).andDo(print()).andExpect(status().isOk())
                     .andExpect(content().string(containsString("Address Book")));
         }
 
         @Test
         public void addBuddyInfo() throws Exception {
-            String name = "Frodo";
-            String phoneNumber = "2";
+            String name = "weihong";
             String address = "1";
+            String phoneNum = "2";
             String bookId = "-1";
 
-            String addBuddyQuery = String.format("/addBuddy?name=%s&phoneNumber=%s&address=%s&bookId=%s", name, phoneNumber, address, bookId);
+            String addBuddyQuery = String.format("/addBuddy?name=%s&address=%s&phoneNum=%s&bookId=%s", name, address, phoneNum, bookId);
             String expectedResult =  String.format("Name: %s", name);
 
-            this.mockMvc.perform(post("/addAddressBook"));
+            this.mockMvc.perform(post("/addAddressbook"));
             this.mockMvc.perform(post(addBuddyQuery));
-            this.mockMvc.perform(get("/viewAddressBook?id=-1")).andDo(print()).andExpect(status().isOk())
+            this.mockMvc.perform(get("/AddressBook?id=-1")).andDo(print()).andExpect(status().isOk())
                     .andExpect(content().string(containsString(expectedResult)));
         }
 
         @Test
         public void removeBuddyInfo() throws Exception {
-            String name = "Frodo";
-            String phoneNumber = "2";
+            String name = "weihong";
             String address = "1";
+            String phoneNum = "2";
             String bookId = "-1";
             String buddyId = "-1";
 
-            String addBuddyQuery = String.format("/addBuddy?name=%s&phoneNumber=%s&address=%s&bookId=%s", name, phoneNumber, address, bookId);
+            String addBuddyQuery = String.format("/addBuddy?name=%s&address=%s&phoneNum=%s&bookId=%s", name, address, phoneNum, bookId);
             String removeBuddyQuery = String.format("/removeBuddy?buddyId=%s&bookId=%s", buddyId, bookId);
             String expectedResult =  String.format("Name: %s", name);
 
-            this.mockMvc.perform(post("/addAddressBook"));
+            this.mockMvc.perform(post("/addAddressbook"));
             this.mockMvc.perform(post(addBuddyQuery));
-            this.mockMvc.perform(get("/viewAddressBook?id=-1")).andDo(print()).andExpect(status().isOk())
+            this.mockMvc.perform(get("/AddressBook?id=-1")).andDo(print()).andExpect(status().isOk())
                     .andExpect(content().string(containsString(expectedResult)));
             this.mockMvc.perform(post(removeBuddyQuery));
-            this.mockMvc.perform(get("/viewAddressBook?id=-1")).andDo(print()).andExpect(status().isOk())
+            this.mockMvc.perform(get("/AddressBook?id=-1")).andDo(print()).andExpect(status().isOk())
                     .andExpect(content().string(not(containsString(expectedResult))));
 
             this.mockMvc.perform(post(addBuddyQuery));
